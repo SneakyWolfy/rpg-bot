@@ -1,6 +1,8 @@
 //? Everything in ".env" will be stored into "process.env"
 require("dotenv").config();
 
+const commandController = require("./src/controllers/commandController");
+
 const fs = require("node:fs");
 const { BOT_TOKEN: token } = process.env;
 const { Client, Collection, Intents } = require("discord.js");
@@ -20,23 +22,7 @@ for (const file of commandFiles) {
 
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
-  client.on("interactionCreate", async (interaction) => {
-    if (!interaction.isCommand()) return;
-
-    const command = client.commands.get(interaction.commandName);
-
-    if (!command) return;
-
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
-    }
-  });
+  commandController.init(client);
 });
 
 // Login to Discord with your client's token
