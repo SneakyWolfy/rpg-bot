@@ -1,4 +1,4 @@
-const Command = require("../utils/Command");
+const Command = require("../../utils/Command");
 
 class Ping extends Command {
   constructor() {

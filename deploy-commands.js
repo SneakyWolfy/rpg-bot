@@ -7,12 +7,27 @@ const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 
 const commands = [];
-const commandFiles = fs
+const commandCategories = fs
   .readdirSync("./src/commands")
-  .filter((file) => file.endsWith(".js"));
+  .filter((dirName) => !dirName.includes("."));
+
+const commandFiles = [];
+
+for (const category of commandCategories) {
+  const categoryCommands = fs
+    .readdirSync(`./src/commands/${category}`)
+    .filter((command) => command.endsWith(".js"))
+    .map((commandName) => {
+      return {
+        name: commandName,
+        dirName: category + "/",
+      };
+    });
+  commandFiles.push(...categoryCommands);
+}
 
 for (const file of commandFiles) {
-  const command = require(`./src/commands/${file}`);
+  const command = require(`./src/commands/${file.dirName}${file.name}`);
   commands.push(command.data.toJSON());
 }
 
