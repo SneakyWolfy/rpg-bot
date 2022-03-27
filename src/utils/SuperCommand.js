@@ -27,13 +27,17 @@ class SuperCommand extends Command {
 
   async execute(interaction) {
     const subCommandName = interaction.options.getSubcommand();
-
     const subCommand = this.#subCommands.get(subCommandName);
-
     if (!subCommand) return;
 
-    await subCommand.execute(interaction);
+    let res = await this.before(interaction, subCommand);
+    res = await subCommand.execute(interaction, res);
+    await this.after(interaction, subCommand, res);
   }
+
+  async before() {}
+
+  async after() {}
 }
 
 module.exports = SuperCommand;

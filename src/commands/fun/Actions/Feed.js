@@ -1,5 +1,4 @@
 const SubCommand = require("../../../utils/SubCommand");
-const { Nekos } = require("../../../models/apis");
 
 class Feed extends SubCommand {
   constructor() {
@@ -11,15 +10,6 @@ class Feed extends SubCommand {
         .setDescription("The user to nom")
         .setRequired(true)
     );
-  }
-
-  async action(interaction) {
-    const embed = await Nekos.feed(
-      interaction.user,
-      interaction.options.getUser("target")
-    );
-
-    await interaction.reply({ embeds: [embed] });
   }
 }
 

@@ -1,5 +1,4 @@
 const SubCommand = require("../../../utils/SubCommand");
-const { Nekos } = require("../../../models/apis");
 
 class Pat extends SubCommand {
   constructor() {
@@ -11,15 +10,6 @@ class Pat extends SubCommand {
         .setDescription("The user to pat")
         .setRequired(true)
     );
-  }
-
-  async action(interaction) {
-    const embed = await Nekos.pat(
-      interaction.user,
-      interaction.options.getUser("target")
-    );
-
-    await interaction.reply({ embeds: [embed] });
   }
 }
 

@@ -17,6 +17,8 @@ exports.handleError = async (error, interaction) => {
     return;
   }
 
+  console.log(error);
+
   await interaction.reply({
     content: "There was an error while executing this command!",
     ephemeral: true,

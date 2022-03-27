@@ -8,6 +8,8 @@ class SubCommand extends Command {
   async execute(interaction) {
     await this.action(interaction);
   }
+
+  async action() {}
 }
 
 module.exports = SubCommand;

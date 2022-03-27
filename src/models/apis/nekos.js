@@ -42,11 +42,13 @@ const getAction = async (name) => {
   return res.data.results[0];
 };
 
-const buildActionEmbed = (data, string) =>
-  new MessageEmbed()
-    .setDescription(string)
+const buildActionEmbed = (data, string) => {
+  const embed = new MessageEmbed()
     .setImage(data.url)
     .setFooter({ text: `Source: ${data.anime_name}` });
+
+  return { embed, content: string };
+};
 
 exports.baka = async (user, target) => {
   const data = await getAction("baka");

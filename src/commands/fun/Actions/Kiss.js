@@ -1,5 +1,4 @@
 const SubCommand = require("../../../utils/SubCommand");
-const { Nekos } = require("../../../models/apis");
 
 class Kiss extends SubCommand {
   constructor() {
@@ -11,15 +10,6 @@ class Kiss extends SubCommand {
         .setDescription("The user to kiss")
         .setRequired(true)
     );
-  }
-
-  async action(interaction) {
-    const embed = await Nekos.kiss(
-      interaction.user,
-      interaction.options.getUser("target")
-    );
-
-    await interaction.reply({ embeds: [embed] });
   }
 }
 
