@@ -42,7 +42,7 @@ class Purge extends Command {
     let lastId;
     let acc = 0;
 
-    while (true) {
+    while (allMessages.length >= limit) {
       const options = { limit: 100 };
       if (lastId) options.before = lastId;
 
@@ -57,9 +57,7 @@ class Purge extends Command {
       allMessages.push(...messagesFiltered.values());
       lastId = messages.last().id;
 
-      if (messages.size != 100 || allMessages.length >= limit) {
-        break;
-      }
+      if (messages.size != 100) break;
     }
     return allMessages;
   }
