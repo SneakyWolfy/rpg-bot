@@ -7,6 +7,7 @@ class Purge extends Command {
     super({
       description:
         "Deletes a specified count of messages in a channel (Limit 100)",
+      reqPermissions: ["ADMINISTRATOR"],
     });
 
     this.data.addIntegerOption((option) =>

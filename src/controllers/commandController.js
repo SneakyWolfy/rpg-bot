@@ -1,3 +1,6 @@
+const permissionModel = require("../models/permissionModel");
+const errorController = require("./errorController");
+
 let client;
 
 /**
@@ -13,13 +16,10 @@ const onSlashCommand = async (interaction) => {
   if (!command) return;
 
   try {
+    await permissionModel.validate(interaction, command);
     await command.execute(interaction);
   } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
+    errorController.handleError(error, interaction);
   }
 };
 

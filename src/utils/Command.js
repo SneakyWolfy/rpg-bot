@@ -11,6 +11,9 @@ class Command {
     this.data = new SlashCommandBuilder()
       .setName(this.name)
       .setDescription(this.description);
+
+    /** @type {Array<Discord.PermissionString>} Required permissions to use the command */
+    this.reqPermissions = options.reqPermissions ?? [];
   }
 
   async execute(interaction) {
