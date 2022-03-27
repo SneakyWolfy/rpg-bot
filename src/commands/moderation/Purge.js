@@ -1,6 +1,6 @@
-const Command = require("../utils/Command");
-const { waitTime: time } = require("../../config");
-const { wait } = require("../utils/helpers.js");
+const Command = require("../../utils/Command");
+const { waitTime: time } = require("../../../config");
+const { wait } = require("../../utils/helpers.js");
 
 class Purge extends Command {
   constructor() {
@@ -8,12 +8,14 @@ class Purge extends Command {
       description:
         "Deletes a specified count of messages in a channel (Limit 100)",
     });
+
     this.data.addIntegerOption((option) =>
       option
         .setName("amount")
         .setDescription("The amount of messages to purge")
         .setRequired(true)
     );
+
     this.data.addUserOption((option) =>
       option.setName("user").setDescription("The targeted user to purge from")
     );
