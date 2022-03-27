@@ -16,7 +16,6 @@ const commandFiles = [];
 for (const category of commandCategories) {
   const categoryCommands = fs
     .readdirSync(`./src/commands/${category}`)
-    .filter((command) => command.endsWith(".js"))
     .map((commandName) => {
       return {
         name: commandName,

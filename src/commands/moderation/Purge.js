@@ -13,7 +13,7 @@ class Purge extends Command {
         .setRequired(true)
     );
     this.data.addUserOption((option) =>
-      option.setName("user").setDescription("The targetted user to purge from")
+      option.setName("user").setDescription("The targeted user to purge from")
     );
   }
 
