@@ -8,12 +8,27 @@ const { Client, Collection, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
-const commandFiles = fs
+const commandCategories = fs
   .readdirSync("./src/commands")
-  .filter((file) => file.endsWith(".js"));
+  .filter((dirName) => !dirName.includes("."));
+
+const commandFiles = [];
+
+for (const category of commandCategories) {
+  const categoryCommands = fs
+    .readdirSync(`./src/commands/${category}`)
+    .filter((command) => command.endsWith(".js"))
+    .map((commandName) => {
+      return {
+        name: commandName,
+        dirName: category + "/",
+      };
+    });
+  commandFiles.push(...categoryCommands);
+}
 
 for (const file of commandFiles) {
-  const command = require(`./src/commands/${file}`);
+  const command = require(`./src/commands/${file.dirName}${file.name}`);
   client.commands.set(command.data.name, command);
 }
 

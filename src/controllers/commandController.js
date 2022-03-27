@@ -1,5 +1,10 @@
 let client;
 
+/**
+ *
+ * @param {Interaction} interaction
+ * @returns
+ */
 const onSlashCommand = async (interaction) => {
   if (!interaction.isCommand()) return;
 
