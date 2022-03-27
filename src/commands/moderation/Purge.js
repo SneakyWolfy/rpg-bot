@@ -1,4 +1,6 @@
-const Command = require("../../utils/Command");
+const Command = require("../utils/Command");
+const { waitTime: time } = require("../../config");
+const { wait } = require("../utils/helpers.js");
 
 class Purge extends Command {
   constructor() {
@@ -21,20 +23,45 @@ class Purge extends Command {
     const amount = await interaction.options.getInteger("amount");
     const user = await interaction.options.getUser("user");
 
-    console.log(user);
-
-    const messages = await interaction.channel.messages.fetch({
-      limit: amount > 100 ? 100 : amount,
-    });
-
-    await messages.filter((m) => {
-      if (user) return m.author === user;
-      return m;
-    });
+    const messages = await this._fetchMessages(
+      interaction.channel,
+      amount,
+      user
+    );
     interaction.channel.bulkDelete(messages);
+
     await interaction.reply(
       `Successfully purged ${Array.from(messages).length} messages`
     );
+    await wait(time);
+    await interaction.deleteReply();
+  }
+
+  async _fetchMessages(channel, limit, user) {
+    const allMessages = [];
+    let lastId;
+    let acc = 0;
+
+    while (true) {
+      const options = { limit: 100 };
+      if (lastId) options.before = lastId;
+
+      const messages = await channel.messages.fetch(options);
+      const messagesFiltered = messages.filter((m) => {
+        if (user && m.author.id !== user.id) return false;
+        if (acc >= limit) return false;
+        acc++;
+        return true;
+      });
+
+      allMessages.push(...messagesFiltered.values());
+      lastId = messages.last().id;
+
+      if (messages.size != 100 || allMessages.length >= limit) {
+        break;
+      }
+    }
+    return allMessages;
   }
 }
 
