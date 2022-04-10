@@ -1,4 +1,5 @@
 const commandController = require("./src/controllers/commandController");
+const musicModel = require("./src/models/musicModel");
 const fs = require("node:fs");
 const server = require("./server");
 
@@ -6,7 +7,9 @@ const { BOT_TOKEN: token } = process.env;
 const { Client, Collection, Intents } = require("discord.js");
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
+});
 client.commands = new Collection();
 
 const commandCategories = fs
@@ -36,6 +39,7 @@ for (const file of commandFiles) {
 client.once("ready", async () => {
   await server.init();
   commandController.init(client);
+  musicModel.setClient(client);
 });
 
 // so connect here
