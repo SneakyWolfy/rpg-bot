@@ -8,7 +8,7 @@ const musicController = require("../../controllers/musicController");
 class Play extends Command {
   constructor() {
     super({
-      description: "Joins your vc",
+      description: "Plays the first result from your search",
     });
 
     this.data.addStringOption((option) =>

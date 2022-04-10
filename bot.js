@@ -1,15 +1,10 @@
 const commandController = require("./src/controllers/commandController");
-const musicModel = require("./src/models/musicModel");
+
+const client = require("./src/models/Client");
+
 const fs = require("node:fs");
 
 const { BOT_TOKEN: token } = process.env;
-const { Client, Collection, Intents } = require("discord.js");
-
-// Create a new client instance
-const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
-});
-client.commands = new Collection();
 
 const commandCategories = fs
   .readdirSync("./src/commands")
@@ -36,9 +31,11 @@ for (const file of commandFiles) {
 
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
-  commandController.init(client);
-  musicModel.setClient(client);
+  commandController.init();
 });
+
+client.on("error", console.error);
+client.on("warn", console.warn);
 
 // Login to Discord with your client's token
 client.login(token);

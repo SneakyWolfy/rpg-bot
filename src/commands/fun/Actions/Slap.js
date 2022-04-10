@@ -7,6 +7,10 @@ class Slap extends SubCommand {
     this.data.addUserOption((option) =>
       option.setName("target").setDescription("The user to slap")
     );
+
+    this.data.addBooleanOption((option) =>
+      option.setName("mention-user").setDescription("Mention the user")
+    );
   }
 }
 

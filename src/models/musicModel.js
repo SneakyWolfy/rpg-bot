@@ -1,8 +1,21 @@
 const { Player } = require("discord-player");
 const AppError = require("../utils/AppError");
 
+const client = require("./Client");
+
 /** @type {Player}*/
-let player;
+const player = new Player(client);
+
+player.on("error", (queue, error) => {
+  console.log(
+    `[${queue.guild.name}] Error emitted from the queue: ${error.message}`
+  );
+});
+player.on("connectionError", (queue, error) => {
+  console.log(
+    `[${queue.guild.name}] Error emitted from the connection: ${error.message}`
+  );
+});
 
 exports.isInVoice = async (interaction) => {
   if (!interaction.member.voice.channelId) {
@@ -54,8 +67,4 @@ exports.searchFirst = async (interaction, query) => {
   const res = await this.search(interaction, query);
 
   return res.tracks[0];
-};
-
-exports.setClient = (client) => {
-  player = new Player(client);
 };

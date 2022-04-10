@@ -10,6 +10,10 @@ class Kiss extends SubCommand {
         .setDescription("The user to kiss")
         .setRequired(true)
     );
+
+    this.data.addBooleanOption((option) =>
+      option.setName("mention-user").setDescription("Mention the user")
+    );
   }
 }
 
