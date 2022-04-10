@@ -1,5 +1,6 @@
 const commandController = require("./src/controllers/commandController");
 const fs = require("node:fs");
+const server = require("./server");
 
 const { BOT_TOKEN: token } = process.env;
 const { Client, Collection, Intents } = require("discord.js");
@@ -32,9 +33,12 @@ for (const file of commandFiles) {
 }
 
 // When the client is ready, run this code (only once)
-client.once("ready", () => {
+client.once("ready", async () => {
+  await server.init();
   commandController.init(client);
 });
+
+// so connect here
 
 // Login to Discord with your client's token
 client.login(token);

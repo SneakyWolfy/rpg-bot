@@ -1,3 +1,3 @@
-exports.clientId = "955943388413296670";
-exports.guildId = "785802599240302593";
+exports.clientId = "957774839593181204";
+exports.guildId = "907006930206216262";
 exports.waitTime = 1.5;
