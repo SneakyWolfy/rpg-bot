@@ -7,6 +7,10 @@ class Highfive extends SubCommand {
     this.data.addUserOption((option) =>
       option.setName("target").setDescription("The person to highfive with")
     );
+
+    this.data.addBooleanOption((option) =>
+      option.setName("mention-user").setDescription("Mention the user")
+    );
   }
 }
 

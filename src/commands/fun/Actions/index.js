@@ -8,18 +8,30 @@ class Act extends SuperCommand {
 
   async before(interaction, subCommand) {
     const target = interaction.options.getUser("target");
+    const willMentionUser =
+      interaction.options.getBoolean("mention-user") ?? false;
 
     const { content, embed } = await Nekos[subCommand.name](
       interaction.user,
       target
     );
 
-    await interaction.reply({
-      content,
-      embeds: [
-        embed.setDescription(`${interaction.user} used ${subCommand.name}!`),
-      ],
-    });
+    if (willMentionUser) {
+      await interaction.reply({
+        content,
+        embeds: [
+          embed.setDescription(`${interaction.user} used ${subCommand.name}!`),
+        ],
+      });
+    } else {
+      await interaction.reply({
+        embeds: [
+          embed
+            .setDescription(content)
+            .setTitle(`${interaction.user.username} used ${subCommand.name}!`),
+        ],
+      });
+    }
   }
 }
 

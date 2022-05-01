@@ -10,6 +10,10 @@ class Bite extends SubCommand {
         .setDescription("The user to nom")
         .setRequired(true)
     );
+
+    this.data.addBooleanOption((option) =>
+      option.setName("mention-user").setDescription("Mention the user")
+    );
   }
 }
 

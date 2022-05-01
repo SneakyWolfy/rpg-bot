@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Reminders = require("../commands/utils/Reminders");
 
+exports.state = {};
+
 const reminderSchema = new mongoose.Schema(
   {
     userRef: {

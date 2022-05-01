@@ -1,7 +1,7 @@
 const permissionModel = require("../models/permissionModel");
 const errorController = require("./errorController");
 
-let client;
+const client = require("../models/Client");
 
 /**
  *
@@ -23,7 +23,6 @@ const onSlashCommand = async (interaction) => {
   }
 };
 
-exports.init = (_client) => {
-  client = _client;
+exports.init = () => {
   client.on("interactionCreate", onSlashCommand);
 };

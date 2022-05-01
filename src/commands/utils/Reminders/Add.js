@@ -1,6 +1,8 @@
 const SubCommand = require("../../../utils/SubCommand");
 const { Reminder } = require("../../../models/reminderModel");
 const { fetchUser } = require("../../../utils//helpers");
+const client = require("../../../models/Client");
+const { MessageEmbed } = require("discord.js");
 
 class Add extends SubCommand {
   constructor() {
@@ -36,10 +38,31 @@ class Add extends SubCommand {
         body: desc,
         dateDue: time,
       });
+
+      console.log(Date.parse(time) - Date.now());
       console.log(remind);
+
       await remind.save();
+
+      setTimeout(() => {
+        console.log("This reminder has been closed!");
+        const embed = new MessageEmbed()
+          .setColor("#36393F")
+          .setTitle("Your Reminder is Due!")
+          .setDescription(remind.body + "\n\u200b")
+          .setTimestamp()
+          .setFooter({
+            text: interaction.user.username,
+            iconURL: interaction.user.avatarURL(),
+          });
+
+        client.channels.cache.get(`${interaction.channelId}`).send({
+          content: `${interaction.user}`,
+          embeds: [embed],
+        });
+      }, Date.parse(time) - Date.now());
+
       await interaction.reply("Reminder created!");
-      // console.log(remind);
     } catch (err) {
       throw err;
     }
