@@ -68,3 +68,8 @@ exports.searchFirst = async (interaction, query) => {
 
   return res.tracks[0];
 };
+
+exports.createTrackFromString = (trackStr) => {
+  console.log(Player);
+  console.log(trackStr);
+};
